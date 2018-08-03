@@ -21,21 +21,23 @@ void UDoorEvents::BeginPlay()
 
 	Owner = GetOwner();
 	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!DoorInteractionArea)
-	{
-		UE_LOG(LogTemp, Error, TEXT("DoorInteractionArea does not exist or attached."));
-	}
+
 	if (!Player)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Player does not exist or attached."));
 	}
-	if (DoorInteractionArea->IsOverlappingActor(Owner)) 
+	if (!DoorInteractionArea)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Checking true"));
+		UE_LOG(LogTemp, Error, TEXT("DoorInteractionArea does not exist or attached."));
+		return;
+	}
+	if (Owner->IsOverlappingActor(DoorInteractionArea))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DoorInteractionArea is overlap %s"), *Owner->GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Checking false"));
+		UE_LOG(LogTemp, Error, TEXT("DoorInteractionArea not overlap %s"), *Owner->GetName());
 	}
 }
 
