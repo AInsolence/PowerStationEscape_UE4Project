@@ -18,8 +18,8 @@ UDoorEvents::UDoorEvents()
 void UDoorEvents::BeginPlay()
 {
 	Super::BeginPlay();
-
 	Owner = GetOwner();
+	InitRotation = Owner->GetActorRotation();
 	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	if (!Player)
@@ -52,7 +52,7 @@ void UDoorEvents::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		if(DoorInteractionArea != nullptr && DoorInteractionArea->IsOverlappingActor(Player))
 		{
 			UE_LOG(LogTemp, Error, TEXT("Overlap"));
-			if (!IsDoorOpen)
+			if (!IsOpen)
 			{
 				OpenDoor.Broadcast();
 			}
