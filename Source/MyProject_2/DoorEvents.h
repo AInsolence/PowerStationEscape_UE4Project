@@ -33,7 +33,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	bool IsDoorOpen = false;
+	AActor* Locker = nullptr;
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* DoorInteractionArea = nullptr;
 	UPROPERTY(BlueprintAssignable)

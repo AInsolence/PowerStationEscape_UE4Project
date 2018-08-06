@@ -51,14 +51,20 @@ void UDoorEvents::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	{
 		if(DoorInteractionArea != nullptr && DoorInteractionArea->IsOverlappingActor(Player))
 		{
-			UE_LOG(LogTemp, Error, TEXT("Overlap"));
-			if (!IsOpen)
+			if (Locker == nullptr || Locker->IsActorBeingDestroyed())
 			{
-				OpenDoor.Broadcast();
+				if (!IsOpen)
+				{
+					OpenDoor.Broadcast();
+				}
+				else
+				{
+					CloseDoor.Broadcast();
+				}
 			}
 			else
 			{
-				CloseDoor.Broadcast();
+				UE_LOG(LogTemp, Warning, TEXT("Need to find a key"));
 			}
 		}
 	}

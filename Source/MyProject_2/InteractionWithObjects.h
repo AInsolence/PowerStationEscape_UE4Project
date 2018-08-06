@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Components/InputComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Engine/TriggerVolume.h"
 #include "GameFramework/Actor.h"
+#include "Components/ActorComponent.h"
 #include "InteractionWithObjects.generated.h"
 
 
@@ -28,7 +30,15 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	bool isInteractNow = false;
 private:
+	UPROPERTY()
+	float PlayerHandsLength = 150.f;
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent * InputComponent = nullptr;
 	void SetupInputComponent();
-	void InteractWithDoor();
+	void FindPhysicsHandleComponent();
+	FTwoVectors GetLineTrace() const;
+	FHitResult GetFirstHitObject() const;
+	void InteractWithObject() const;
+	void Grab();
+	void Release();
 };
