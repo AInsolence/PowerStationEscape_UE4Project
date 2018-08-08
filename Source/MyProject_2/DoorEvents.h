@@ -6,6 +6,7 @@
 #include "Engine/TriggerVolume.h"
 #include "GameFramework/Actor.h"
 #include "Components/ActorComponent.h"
+#include "Sound/SoundCue.h"
 #include "DoorEvents.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);

@@ -31,14 +31,14 @@ public:
 	bool isInteractNow = false;
 private:
 	UPROPERTY()
-	float PlayerHandsLength = 150.f;
+	float PlayerHandsLength = 200.0f;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent * InputComponent = nullptr;
 	void SetupInputComponent();
 	void FindPhysicsHandleComponent();
 	FTwoVectors GetLineTrace() const;
 	FHitResult GetFirstHitObject() const;
-	void InteractWithObject() const;
+	void InteractWithObject();
 	void Grab();
 	void Release();
 };

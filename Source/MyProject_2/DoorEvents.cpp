@@ -2,6 +2,7 @@
 
 #include "DoorEvents.h"
 #include "Engine/World.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
 UDoorEvents::UDoorEvents()
@@ -37,7 +38,7 @@ void UDoorEvents::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("DoorInteractionArea not overlap %s"), *Owner->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("DoorInteractionArea not overlap %s"), *Owner->GetName());
 	}
 }
 

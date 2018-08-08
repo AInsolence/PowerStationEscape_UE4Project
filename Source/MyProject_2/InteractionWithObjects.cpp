@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "Components/PrimitiveComponent.h"
 #include "KeyUnlocker.h"
+#include "DrawDebugHelpers.h"
 
 #define OUT
 
@@ -32,6 +33,14 @@ void UInteractionWithObjects::BeginPlay()
 void UInteractionWithObjects::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	/*DrawDebugPoint(
+		GetWorld(),
+		GetLineTrace().v2,
+		10.0f,
+		FColor::Red,
+		true,
+		1.0f
+	);*/
 	if (!PhysicsHandle) return;
 	/// if the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent) {
@@ -45,7 +54,7 @@ void UInteractionWithObjects::SetupInputComponent()
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent)
 	{
-		InputComponent->BindAction("Interaction", IE_Pressed, this, &UInteractionWithObjects::Grab);
+		InputComponent->BindAction("Interaction", IE_Pressed, this, &UInteractionWithObjects::InteractWithObject);
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UInteractionWithObjects::Grab);
 		InputComponent->BindAction("Grab", IE_Released, this, &UInteractionWithObjects::Release);
 	}
@@ -90,14 +99,19 @@ FHitResult UInteractionWithObjects::GetFirstHitObject() const
 	return HitObject;
 }
 
-void UInteractionWithObjects::InteractWithObject() const
+void UInteractionWithObjects::InteractWithObject()
 {
-	return;
+	UE_LOG(LogTemp, Warning, TEXT("Interaction!"));
+	if (GetFirstHitObject().GetActor() && GetFirstHitObject().GetActor()->FindComponentByClass<UKeyUnlocker>())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Key finded!"));
+		GetFirstHitObject().GetActor()->Destroy();
+	}
 }
 
 void UInteractionWithObjects::Grab()
 {
-	if (GetFirstHitObject().GetActor())// if hit an object
+	if (GetFirstHitObject().GetActor() && PhysicsHandle)// if hit an object
 	{
 		auto MeshComponent = GetFirstHitObject().GetComponent();
 		PhysicsHandle->GrabComponent(
@@ -106,15 +120,13 @@ void UInteractionWithObjects::Grab()
 			MeshComponent->GetOwner()->GetActorLocation(),
 			true
 		);
-		if (GetFirstHitObject().GetActor()->FindComponentByClass<UKeyUnlocker>())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Key finded!"));
-			GetFirstHitObject().GetActor()->Destroy();
-		}
 	}
 }
 
 void UInteractionWithObjects::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+	if (PhysicsHandle)
+	{
+		PhysicsHandle->ReleaseComponent();
+	}
 }
