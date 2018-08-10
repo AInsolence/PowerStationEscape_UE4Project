@@ -41,6 +41,8 @@ private:
 	FDoorEvent OpenDoor;
 	UPROPERTY(BlueprintAssignable)
 	FDoorEvent CloseDoor;
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent AccessDenied;
 
 	AActor* Owner = nullptr;
 	AActor* Player = nullptr;

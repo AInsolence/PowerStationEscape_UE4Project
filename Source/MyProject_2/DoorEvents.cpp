@@ -66,6 +66,7 @@ void UDoorEvents::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 			else
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Need to find a key"));
+				AccessDenied.Broadcast();
 			}
 		}
 	}
