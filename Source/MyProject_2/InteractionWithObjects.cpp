@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "InteractionWithObjects.h"
-#include "Components/PrimitiveComponent.h"
 #include "Engine/World.h"
 #include "Components/PrimitiveComponent.h"
 #include "KeyUnlocker.h"
+#include "InteractionBehavior.h"
 #include "DrawDebugHelpers.h"
 
 #define OUT
@@ -105,7 +105,12 @@ void UInteractionWithObjects::InteractWithObject()
 	if (GetFirstHitObject().GetActor() && GetFirstHitObject().GetActor()->FindComponentByClass<UKeyUnlocker>())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Key finded!"));
-		GetFirstHitObject().GetActor()->Destroy();
+		GetFirstHitObject().GetActor()->FindComponentByClass<UKeyUnlocker>()->Interact();
+	}
+	if (GetFirstHitObject().GetActor() && GetFirstHitObject().GetActor()->FindComponentByClass<UInteractionBehavior>())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Key finded!"));
+		GetFirstHitObject().GetActor()->FindComponentByClass<UInteractionBehavior>()->Interact();
 	}
 }
 

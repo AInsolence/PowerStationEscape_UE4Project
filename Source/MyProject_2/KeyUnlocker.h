@@ -15,6 +15,7 @@ class MYPROJECT_2_API UKeyUnlocker : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UKeyUnlocker();
+	void Interact();
 
 protected:
 	// Called when the game starts

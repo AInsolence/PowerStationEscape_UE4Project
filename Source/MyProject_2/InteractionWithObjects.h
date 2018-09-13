@@ -31,7 +31,7 @@ public:
 	bool isInteractNow = false;
 private:
 	UPROPERTY()
-	float PlayerHandsLength = 200.0f;
+	float PlayerHandsLength = 250.0f;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent * InputComponent = nullptr;
 	void SetupInputComponent();
